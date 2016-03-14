@@ -1,0 +1,12 @@
+---
+instances: 1
+memory: 2048M
+applications:
+  - name: aggservice-d-iot
+    host: aggservice-d-iot
+    services:
+      - service-registry
+      - circuit-breaker
+    env:
+      SPRING_PROFILES_ACTIVE: pcf
+      CF_TARGET: https://api.run.pez.pivotal.io

@@ -1,0 +1,12 @@
+---
+instances: 1
+memory: 2048M
+applications:
+  - name: taxiservice-d-iot
+    host: taxiservice-d-iot
+    services:
+      - config-server
+      - service-registry
+    env:
+      SPRING_PROFILES_ACTIVE: pcf
+      CF_TARGET: https://api.run.pez.pivotal.io

@@ -1,0 +1,8 @@
+---
+instances: 1
+memory: 1024M
+applications:
+- name: iot-taxi
+  host: iot-taxi
+services:
+- agg_service_iot
