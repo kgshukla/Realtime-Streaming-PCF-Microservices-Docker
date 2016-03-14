@@ -51,20 +51,20 @@ The below diagram depicts the Microservices based applications. In my earlier li
 
 image::images/solution_architecture_2.png[]
 
-As shown in the image above, we have following microservices
+As shown in the image above, we have following microservices. All these microservices are modeled as Docker Images. To get the code please refer to our previous link:https://github.com/kgshukla/Realtime-Streaming-PCF-Microservices-BDS[demo].
 
 1. EventService - this is a spring boot application that retrieves it's coniguration from config-server (like gemfire host and port to connect to) and exposes few http end points related to events - like how many events (every data in the stream is an event) have been processed, how many events have missing data entries, how much time it takes to process events in a window of 10 second. This service retrieves data from Gemfire.
 
 2. TaxiService - this is a spring boot application that retrieves it's coniguration from config-server and exposes few http end points related to taxi information - like what are the top 10 routes, where are free taxies available in a window of 10 seconds. This service retrieves data from Gemfire.
 
-3. AnalyticSercice - this is a spring boot application that retrieves it's coniguration from config-server and exposes few http end points related to analytic queries - like who are the drivers reporting incorrect data, who are the drivers earning the mostover collected data. This service retrieves data from PHD/HAWQ.
+3. AnalyticService - this is a spring boot application that retrieves it's coniguration from config-server and exposes few http end points related to analytic queries - like who are the drivers reporting incorrect data, who are the drivers earning the mostover collected data. This service retrieves data from PHD/HAWQ. We will not deploy this application in this demo.
 
 4. AggService (aggregator service) - this is a spring boot application that talks to the above 3 microservices using service-registry. It also utilizes circuit-breaker which gets activated automatically in case any of the microservice fails (due to connectivity to data source, or they are not up or network failure). This service exposes all end points to the web application.
 
 5. PHP based web app - this is a php application that calls AggService's exposed endpoints to retrieve data and show it on a web page. 
 
 
-All these will be deployed on Pivotal Cloud Foundry.
+All these Docker images and php web app will be deployed on Pivotal Cloud Foundry.
 
 === Launch Amazon AMI 
 

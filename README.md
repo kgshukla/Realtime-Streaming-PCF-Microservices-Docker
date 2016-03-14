@@ -1,4 +1,6 @@
-# Realtime-Streaming-PCF-Microservices-BDS
+# Realtime-Streaming-PCF-Microservices-Docker
+
+This is an extension to our previous demo https://github.com/kgshukla/Realtime-Streaming-PCF-Microservices-BDS, however this time the microservices are modeled as Docker images. 
 
 This demo aims to solve problem that appeared in DEBS challenge 2015
 
