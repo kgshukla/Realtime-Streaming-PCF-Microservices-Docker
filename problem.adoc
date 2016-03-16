@@ -348,6 +348,33 @@ image:images/circuit_breaker.png[]
 
 4. Change gemfire ip address (give arbitrary IP address) in your configuration file (application.yml) and then scale one of the microservice. Notice that it would not be able to startup as it tries to get gemfire IP address from config server during startup. The ones that are already running are not affected.
 
+=== Create hdfs tap stream
+
+If you click on "Analytics on HD" button, you would not see any data because we are running sql queries on Hadoop via HAWQ. However, we have not created any stream that puts the data on hadoop. So in next section let's create a tap on existing stream and simultaneously put data on pivotal Hadoop.
+
+First, you need to start Pivotal Hadoop and HaWQ. Follow this link:images/start_phd.pdf[guide] to start up hadoop using Ambari Server.
+
+Go back to SpringXD shell prompt and create a new stream that is a TAP from original one. 
+
+xd:>stream create --name hdfsstream --definition "tap:stream:stream-topx > hdfs --directory=/xd/streamtaxi --fileExtension=csv --fileName=sorted_data --rollover=300M --idleTimeout=10" --deploy
+
+[source,bash]
+----
+xd:>stream create --name hdfsstream --definition "tap:stream:stream-topx > hdfs --directory=/xd/streamtaxi --fileExtension=csv --fileName=sorted_data --rollover=300M --idleTimeout=10" --deploy
+Created and deployed new stream 'hdfsstream'
+---- 
+
+This stream gets a duplicate from our earlier stream and puts it on HDFS.
+
+Now deploy analytic service docker image
+
+[source,bash]
+----
+cf push -o kgshukla/taxi-iot:analyticservice_v1 -f manifest-analyticservice.yml
+---- 
+
+If you now click on the "Analytics on HD" button, you could see sql queries being run correctly and Google charts are properly shown.
+
 
 === Further Exercises
 

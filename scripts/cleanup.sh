@@ -1,6 +1,7 @@
 
 cf d aggservice-d-iot -f
 cf d eventservice-d-iot -f
+cf d analyticservice-d-iot -f
 cf d iot-taxi-d -f 
 cf d taxiservice-d-iot -f
 
